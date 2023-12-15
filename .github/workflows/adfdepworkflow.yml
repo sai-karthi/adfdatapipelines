@@ -1,0 +1,49 @@
+name: Deploy ARM template to Azure Data Factory
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Validate ARM template
+        uses: Azure/data-factory-validate-action@v1.1.5
+     
+
+      - name: Export Azure Data Factory
+        id: export
+        uses: Azure/data-factory-export-action@v1.2.0
+     
+      
+      - name: Publish ARM template
+        uses: actions/upload-artifact@v2
+        with:
+          name: adf-armtemplate
+          path: ${{ steps.export.outputs.arm-template-directory }}
+          if-no-files-found: error
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true 
+     
+      - name: Download ARM template
+        uses: actions/download-artifact@v3
+        with:
+          name: adf-armtemplate
+
+      - name: Deploy resources
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: sai_aceso          
+          dataFactoryName: devuadf 
