@@ -1,0 +1,64 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "diabetes.csv",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PatientID",
+				"type": "String"
+			},
+			{
+				"name": "Pregnancies",
+				"type": "String"
+			},
+			{
+				"name": "PlasmaGlucose",
+				"type": "String"
+			},
+			{
+				"name": "DiastolicBloodPressure",
+				"type": "String"
+			},
+			{
+				"name": "TricepsThickness",
+				"type": "String"
+			},
+			{
+				"name": "SerumInsulin",
+				"type": "String"
+			},
+			{
+				"name": "BMI",
+				"type": "String"
+			},
+			{
+				"name": "DiabetesPedigree",
+				"type": "String"
+			},
+			{
+				"name": "Age",
+				"type": "String"
+			},
+			{
+				"name": "Diabetic",
+				"type": "String"
+			}
+		]
+	}
+}
