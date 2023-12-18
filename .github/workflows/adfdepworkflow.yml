@@ -39,4 +39,4 @@ jobs:
         # I am only passing the name of the target ADF to which this is being deployed
         parameters: 
           factoryName=devuadf
-          AzureBlobStorage1_connectionString='DefaultEndpointsProtocol=https;AccountName=acesomlops;AccountKey=hWstgQwwDPQsHsUgfiRjcAQ+v2CLlwvz8BJQeKmg2Mv88pdbEQK3Pfk9QghxyDvjoYN0qQjPQAYI+ASt5M6FVA==;EndpointSuffix=core.windows.net '
+          AzureBlobStorage1_connectionString='DefaultEndpointsProtocol=https;AccountName=acesomlops;AccountKey=hWstgQwwDPQsHsUgfiRjcAQ+v2CLlwvz8BJQeKmg2Mv88pdbEQK3Pfk9QghxyDvjoYN0qQjPQAYI+ASt5M6FVA==;EndpointSuffix=core.windows.net'
