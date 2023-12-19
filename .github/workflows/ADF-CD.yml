@@ -1,0 +1,50 @@
+name: ADF Deployment
+on:
+  push:
+    branches:
+      - adf_publish
+  workflow_dispatch:
+    inputs:
+      skipAzModuleInstallation:
+        description: 'Parameters which skip the Az module installation'
+        required: false
+        default: 'false'
+        
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+      
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Az PowerShell module
+      run: if('${{ inputs.skipAzModuleInstallation }}' -ne 'true') { Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force }
+      shell: pwsh
+      
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        enable-AzPSSession: true 
+
+    #Disable Triggers
+    - name: Run Pre-deployment script
+      shell: pwsh
+      run: pwsh -command "./PrePostDeploymentScript.ps1 -armTemplate ./devtadf/ARMTemplateForFactory.json -ResourceGroupName sai_aceso -DataFactoryName devtadf -predeployment $true -deleteDeployment $false"
+      
+      
+    - name: Deploy ADF ARM Templates
+      uses: Azure/arm-deploy@v1
+      with:
+        resourceGroupName: sai_aceso
+        template: ./devtadf/ARMTemplateForFactory.json
+        parameters: 
+          ./devtadf/ARMTemplateForFactory.json
+          factoryName= devuadf 
+          AzureBlobStorage1_connectionString='DefaultEndpointsProtocol=https;AccountName=acesomlops;AccountKey=hWstgQwwDPQsHsUgfiRjcAQ+v2CLlwvz8BJQeKmg2Mv88pdbEQK3Pfk9QghxyDvjoYN0qQjPQAYI+ASt5M6FVA==;EndpointSuffix=core.windows.net'
+    
+    #Enable Triggers
+    - name: Run Post-deployment script
+      shell: pwsh
+      run: pwsh -command "./PrePostDeploymentScript.ps1 -armTemplate ./devtadf/ARMTemplateForFactory.json -ResourceGroupName sai_aceso -DataFactoryName devuadf -predeployment $false -deleteDeployment $true"
