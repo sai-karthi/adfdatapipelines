@@ -35,13 +35,12 @@ jobs:
       
       
     - name: Deploy ADF ARM Templates
-      uses: Azure/arm-deploy@v1
+      uses: Azure/arm-deploy@v1.0.6
       with:
         resourceGroupName: sai_aceso
         template: ./devtadf/ARMTemplateForFactory.json
-        parameters: 
-          ./devtadf/ARMTemplateForFactory.json
-          factoryName= devuadf 
+        parameters:           
+          factoryName=devuadf 
           AzureBlobStorage1_connectionString='DefaultEndpointsProtocol=https;AccountName=acesomlops;AccountKey=hWstgQwwDPQsHsUgfiRjcAQ+v2CLlwvz8BJQeKmg2Mv88pdbEQK3Pfk9QghxyDvjoYN0qQjPQAYI+ASt5M6FVA==;EndpointSuffix=core.windows.net'
     
     #Enable Triggers
