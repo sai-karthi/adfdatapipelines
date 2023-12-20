@@ -164,13 +164,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline new')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline latest one')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data pipeline latest",
+						"name": "Copy data pipeline updated",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
